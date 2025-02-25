@@ -1,6 +1,6 @@
 {
-  "name": "react-native-kakao-share-link",
-  "version": "1.0.12",
+  "name": "react-native-kakao-share-link-android",
+  "version": "1.0.0",
   "description": "리액트 네이티브로 사용하는 카카오톡으로 공유하기. Kakao SDK v2를 사용한 카카오 링크(공유).",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -43,12 +43,12 @@
     "react-native-kakao-share-link"
   ],
   "repository": "https://github.com/millo-L/react-native-kakao-share-link",
-  "author": "millo-L <seungmin3837@naver.com> (https://github.com/millo-L)",
+  "author": "butter-81 <kimbutter@sookmyung.ac.kr> (https://github.com/butter-81)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/millo-L/react-native-kakao-share-link/issues"
   },
-  "homepage": "https://github.com/millo-L/react-native-kakao-share-link#readme",
+  "homepage": "https://github.com/butter-81/react-native-kakao-share-link-android",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

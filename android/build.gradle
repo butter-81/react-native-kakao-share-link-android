@@ -1,6 +1,8 @@
 buildscript {
-  ext.getExtOrDefault = {name ->
-    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['KakaoShareLink_' + name]
+  ext.getExtOrDefault = { name ->
+    // rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['KakaoShareLink_' + name]
+    // or fallback to a default
+    return project.hasProperty("KakaoShareLink_${name}") ? project.property("KakaoShareLink_${name}") : null
   }
 
   repositories {
@@ -9,25 +11,22 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:${getExtOrDefault('gradleVersion')}"
-    // noinspection DifferentKotlinGradleVersion
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+    classpath "com.android.tools.build:gradle:7.4.2" // 예: 업그레이드
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22"
   }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-
 android {
-  compileSdkVersion getExtOrDefault('compileSdkVersion').toInteger()
+  compileSdkVersion getExtOrDefault('compileSdkVersion')?.toInteger() ?: 33
 
   defaultConfig {
-    minSdkVersion getExtOrDefault('minSdkVersion').toInteger()
-    targetSdkVersion getExtOrDefault('targetSdkVersion').toInteger()
+    minSdkVersion getExtOrDefault('minSdkVersion')?.toInteger() ?: 21
+    targetSdkVersion getExtOrDefault('targetSdkVersion')?.toInteger() ?: 33
     versionCode 1
     versionName "1.0"
-
   }
 
   buildTypes {
@@ -35,9 +34,7 @@ android {
       minifyEnabled false
     }
   }
-  lintOptions {
-    disable 'GradleCompatible'
-  }
+
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
@@ -47,23 +44,23 @@ android {
 repositories {
   mavenCentral()
   google()
+  // remove devrepo
 }
 
-def kotlin_version = getExtOrDefault('kotlinVersion')
-def kakaoSdkVersion = getExtOrDefault('kakaoSdkVersion')
+// Use a default or override
+def defaultKakaoSdkVersion = '2.22.0'
+def userKakaoSdkVersion = getExtOrDefault('kakaoSdkVersion')
+def kakaoSdkVersion = userKakaoSdkVersion ?: defaultKakaoSdkVersion
 
 dependencies {
-  // noinspection GradleDynamicVersion
   api 'com.facebook.react:react-native:+'
-  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
   implementation "com.kakao.sdk:v2-share:$kakaoSdkVersion"
 }
 
-rootProject.allprojects {
-  repositories {
-    maven {
-      url 'https://devrepo.kakao.com/nexus/content/groups/public/'
-    }
-  }
-}
-
+// remove or comment out the devrepo block
+// rootProject.allprojects {
+//   repositories {
+//     maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+//   }
+// }
