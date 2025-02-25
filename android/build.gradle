@@ -48,7 +48,7 @@ repositories {
 }
 
 // Use a default or override
-def defaultKakaoSdkVersion = '2.22.0'
+def defaultKakaoSdkVersion = '2.20.0'
 def userKakaoSdkVersion = getExtOrDefault('kakaoSdkVersion')
 def kakaoSdkVersion = userKakaoSdkVersion ?: defaultKakaoSdkVersion
 
